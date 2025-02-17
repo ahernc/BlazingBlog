@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{813784E6-092
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.WebUI.Server", "BlazingBlog.WebUI.Server\BlazingBlog.WebUI.Server.csproj", "{B93F399D-1260-452F-8496-E6BB74369DFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain", "BlazingBlog.Domain\BlazingBlog.Domain.csproj", "{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application", "BlazingBlog.Application\BlazingBlog.Application.csproj", "{4793F858-C62A-4DC7-BA97-F86D07578239}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +21,21 @@ Global
 		{B93F399D-1260-452F-8496-E6BB74369DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B93F399D-1260-452F-8496-E6BB74369DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B93F399D-1260-452F-8496-E6BB74369DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4793F858-C62A-4DC7-BA97-F86D07578239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4793F858-C62A-4DC7-BA97-F86D07578239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4793F858-C62A-4DC7-BA97-F86D07578239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4793F858-C62A-4DC7-BA97-F86D07578239}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B93F399D-1260-452F-8496-E6BB74369DFF} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
+		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
+		{4793F858-C62A-4DC7-BA97-F86D07578239} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
 	EndGlobalSection
 EndGlobal
