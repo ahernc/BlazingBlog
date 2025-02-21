@@ -12,7 +12,7 @@ namespace BlazingBlog.Application
     {
         public static IServiceCollection AddApplication (this IServiceCollection services)
         {         
-            services.AddScoped<IArticleService, ArticleServices>(); 
+            services.AddScoped<IArticleService, ArticleService>(); 
             return services;
         }
     }

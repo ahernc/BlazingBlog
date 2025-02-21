@@ -1,5 +1,6 @@
 using BlazingBlog.Application;
 using BlazingBlog.WebUI.Server.Components;
+using BlazingBlog.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents();
 
 // All depenencies in the ApplicationLayer are loaded here:
 builder.Services.AddApplication();
+builder.Services.AddInfrastucture(builder.Configuration);
 
 var app = builder.Build();
 

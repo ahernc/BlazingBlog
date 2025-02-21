@@ -29,9 +29,9 @@ else
     protected async override Task OnInitializedAsync()
     {
 
-        await Task.Delay(1000);
+        // await Task.Delay(1000); // Fake Delay...
         
-        var result = ArticleService.GetAllArticles();
+        var result = await ArticleService.GetAllArticlesAsync();
         if (result is not null)
         {
             articles = result;
