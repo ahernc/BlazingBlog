@@ -1,4 +1,4 @@
-﻿using BlazingBlog.Application.Services;
+﻿using BlazingBlog.Application.Articles;
 using BlazingBlog.Domain.Articles;
 using BlazingBlog.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;

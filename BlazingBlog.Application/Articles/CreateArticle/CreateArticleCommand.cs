@@ -1,9 +1,9 @@
 ﻿using BlazingBlog.Domain.Articles;
 using MediatR;
 
-namespace BlazingBlog.Application.Services.CreateArticle
+namespace BlazingBlog.Application.Articles.CreateArticle
 {
-    public class CreateArticleCommand : IRequest<Article>
+    public class CreateArticleCommand : IRequest<ArticleResponse>
     {
         public required string Title { get; set; }
         public string? Content { get; set; }
