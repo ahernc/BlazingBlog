@@ -1,6 +1,6 @@
 using BlazingBlog.Application;
-using BlazingBlog.WebUI.Server.Components;
 using BlazingBlog.Infrastructure;
+using BlazingBlog.WebUI.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
