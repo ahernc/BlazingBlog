@@ -1,11 +1,8 @@
 ﻿@page "/articles"
 @attribute [StreamRendering]
-
-@inject IArticleService ArticleService
+@inject ISender Sender
 
 <PageTitle>Articles</PageTitle>
-
-
 
 @if (articles.Count == 0)
 {
@@ -30,8 +27,8 @@ else
     {
 
         // await Task.Delay(1000); // Fake Delay...
-        
-        var result = await ArticleService.GetAllArticlesAsync();
+
+        var result = await Sender.Send(new GetArticlesQuery());
         if (result is not null)
         {
             articles = result;

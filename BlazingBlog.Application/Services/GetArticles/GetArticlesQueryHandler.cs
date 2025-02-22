@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlazingBlog.Application.Services.GetArticles
 {
-    internal class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, List<Article>>
+    public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, List<Article>>
     {
         private readonly IArticleRepository _articleRepository;
 
