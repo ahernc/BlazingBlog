@@ -1,30 +1,113 @@
 ﻿@page "/article-editor"
+@page "/article-editor/{ArticleId:int}"
+@using BlazingBlog.Application.Articles.DeleteArticle
+
 @inject ISender Sender
+@inject NavigationManager NavManager
 
-<PageTitle>Create New Article</PageTitle>
-<h3>Create New Article</h3>
+@if (isEditMode && Article is not null)
+{
+    <PageTitle>Edit Article @Article.Title</PageTitle>
+    <h3>Edit Article @Article.Title</h3>
+}
+else
+{
+    <PageTitle>Create New Article</PageTitle>
+    <h3>Create New Article</h3>
+}
 
-<EditForm Model="Article" OnSubmit="HandleSubmit" FormName="ArticleEditor">
-    <InputText class="form-control" @bind-Value="Article.Title" />
-    <InputTextArea class="form-control" @bind-Value="Article.Content" />
-    <InputDate class="form-control" @bind-Value="Article.DatePublished" />
-    <div>
-        <InputCheckbox class="form-check-input" @bind-Value="Article.IsPublished" />
-        <label class="form-check-label">Is Published</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</EditForm>
+@if (Article is not null)
+{
+    <EditForm Model="Article" OnSubmit="HandleSubmit" FormName="ArticleEditor">
+        <InputText class="form-control" @bind-Value="Article.Title" />
+        <InputTextArea class="form-control" @bind-Value="Article.Content" />
+        <InputDate class="form-control" @bind-Value="Article.DatePublished" />
+        <div>
+            <InputCheckbox class="form-check-input" @bind-Value="Article.IsPublished" />
+            <label class="form-check-label">Is Published</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+    if (isEditMode)
+    {
+        <p>
+            <form @onsubmit="DeleteArticle" @formname="DeleteArticleForm" method="post">
+                <button class="btn btn-danger">Delete</button>
+                <AntiforgeryToken />
+            </form>
+        </p>
+    }
+}
 
 @code {
-    [SupplyParameterFromForm]
+    private bool isEditMode => ArticleId != null;
 
-    public ArticleModel Article { get; set; } = new();
+    [SupplyParameterFromForm]
+    ArticleModel? Article { get; set; }
+
+    [Parameter]
+    public int? ArticleId { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ArticleId is not null)
+        {
+            var result = await Sender.Send(
+                new GetArticleByIdQuery { Id = (int)ArticleId }
+            );
+
+            if (result is not null)
+            {
+                // we will change this later...
+                Article ??= result.Adapt<ArticleModel>();
+                Article.Id = (int)ArticleId;
+            }
+        }
+        else
+        {
+            // ??=  Only sets it if it is null
+            Article ??= new();
+        }
+    }
+
 
     async Task HandleSubmit()
     {
-        var command = Article.Adapt<CreateArticleCommand>();
-        var result = await Sender.Send(command);
-        Article = result.Adapt<ArticleModel>();
+        if (isEditMode)
+        {
+            var command = Article.Adapt<UpdateArticleCommand>();
+            var result = await Sender.Send(command);
+            if (result is not null)
+            {
+                Article = result.Adapt<ArticleModel>();
+            }
+        }
+        else
+        {
+            var command = Article.Adapt<CreateArticleCommand>();
+            var result = await Sender.Send(command);
+            // Article = result.Adapt<ArticleModel>();
+            NavManager.NavigateTo($"/article-editor/{result.Id}");
+        }
+    }
+
+    async Task DeleteArticle()
+    {
+        if (ArticleId is null)
+        {
+            return;
+        }
+
+        var command = new DeleteArticleCommand {
+                Id = (int)ArticleId
+            };
+
+        var isSuccess = await Sender.Send(command);
+        if (isSuccess)
+        {
+            NavManager.NavigateTo("/articles");
+        }
     }
 }
 
