@@ -1,10 +1,8 @@
 ﻿using BlazingBlog.Domain.Articles;
-using Mapster;
-using MediatR;
 
 namespace BlazingBlog.Application.Articles.UpdateArticle
 {
-    public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, ArticleResponse?>
+    public class UpdateArticleCommandHandler : ICommandHandler<UpdateArticleCommand, ArticleResponse?>
     {
         private readonly IArticleRepository _articleRepository;
 
@@ -13,13 +11,13 @@ namespace BlazingBlog.Application.Articles.UpdateArticle
             _articleRepository = articleRepository;
         }
 
-        public async Task<ArticleResponse?> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
+        public async Task<Result<ArticleResponse?>> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
         {
             var updatedArticle = request.Adapt<Article>();
             var article = await _articleRepository.UpdateArticleAsync(updatedArticle);
             if (article is null)
             {
-                return null;
+                return Result.Fail<ArticleResponse?>("Article does not exist.");
             }
             return article.Adapt<ArticleResponse>();
         }

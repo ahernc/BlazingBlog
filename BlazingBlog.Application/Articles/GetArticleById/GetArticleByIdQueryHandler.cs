@@ -1,10 +1,8 @@
 ﻿using BlazingBlog.Domain.Articles;
-using Mapster;
-using MediatR;
 
 namespace BlazingBlog.Application.Articles.GetArticleById
 {
-    public class GetArticleByIdQueryHandler : IRequestHandler<GetArticleByIdQuery, ArticleResponse?>
+    public class GetArticleByIdQueryHandler : IQueryHandler<GetArticleByIdQuery, ArticleResponse?>
     {
         private readonly IArticleRepository _articleRepository;
 
@@ -13,12 +11,12 @@ namespace BlazingBlog.Application.Articles.GetArticleById
             _articleRepository = articleRepository;
         }
 
-        public async Task<ArticleResponse?> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ArticleResponse?>> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _articleRepository.GetArticleByIdAsync(request.Id);
             if (result is null)
             {
-                return null;
+                return Result.Fail<ArticleResponse?>("The article does not exist.");
             }
             else
             {

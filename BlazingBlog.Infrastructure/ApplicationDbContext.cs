@@ -7,7 +7,7 @@ namespace BlazingBlog.Infrastructure
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<Article> Articles { get; set; }
