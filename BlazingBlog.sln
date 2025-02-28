@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Infrastructure", "BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj", "{19DE05DE-F126-4266-96CE-B2BED848D726}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C0D3357A-D990-465E-B72D-9B04F8C2BD0D}"
+	ProjectSection(SolutionItems) = preProject
+		Notes\AdditionalNotes.txt = Notes\AdditionalNotes.txt
+		Notes\mamba-template.html = Notes\mamba-template.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +50,6 @@ Global
 		{C9CEB17D-5438-434A-AA2F-DC7BA9ADD87A} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
 		{4793F858-C62A-4DC7-BA97-F86D07578239} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
 		{19DE05DE-F126-4266-96CE-B2BED848D726} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
+		{C0D3357A-D990-465E-B72D-9B04F8C2BD0D} = {813784E6-0928-4C3F-AF4B-E57C33BAF8A3}
 	EndGlobalSection
 EndGlobal
