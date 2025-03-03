@@ -4,7 +4,7 @@
 
 <PageTitle>Articles</PageTitle>
 
-<a href="/article-editor" class="btn btn-primary" > Create New Article</a>
+<a href="/article-editor" class="btn btn-primary"> Create New Article</a>
 
 @if (articles is null)
 {
@@ -18,10 +18,13 @@ else
 {
     @foreach (var article in articles)
     {
-        <h4>@article.Title</h4>
+        <p><h4>@article.Title</h4></p>
         <p>@article.Content</p>
-        <small>@article.DatePublished</small>
-        <a href="/article-editor/@article.Id">Edit</a>
+        <p>
+            <small>@article.DatePublished</small>
+            <a href="/article-editor/@article.Id">Edit</a>
+        </p>
+        <hr />
     }
 
 }
