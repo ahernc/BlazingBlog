@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C0D3357A-D990-465E-B72D-9B04F8C2BD0D}"
 	ProjectSection(SolutionItems) = preProject
 		Notes\AdditionalNotes.txt = Notes\AdditionalNotes.txt
+		mamba-form-template.html = mamba-form-template.html
 		Notes\mamba-template.html = Notes\mamba-template.html
 	EndProjectSection
 EndProject

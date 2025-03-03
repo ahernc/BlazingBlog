@@ -5,41 +5,58 @@
 @inject ISender Sender
 @inject NavigationManager NavManager
 
+
 @if (isEditMode && Article is not null)
 {
     <PageTitle>Edit Article @Article.Title</PageTitle>
-    <h3>Edit Article @Article.Title</h3>
+    <h2 class="text-2xl font-extrabold text-gray-100">Edit Article @Article.Title</h2>
 }
 else
 {
     <PageTitle>Create New Article</PageTitle>
-    <h3>Create New Article</h3>
+    <h2 class="text-2xl font-extrabold text-gray-100">Create New Article</h2>
 }
-
-@if (Article is not null)
-{
-    <EditForm Model="Article" OnSubmit="HandleSubmit" FormName="ArticleEditor">
-        <InputText class="form-control" @bind-Value="Article.Title" />
-        <InputTextArea class="form-control" @bind-Value="Article.Content" />
-        <InputDate class="form-control" @bind-Value="Article.DatePublished" />
-        <div>
-            <InputCheckbox class="form-check-input" @bind-Value="Article.IsPublished" />
-            <label class="form-check-label">Is Published</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </EditForm>
-    if (isEditMode)
+<div class="space-y-4">
+    @if (Article is not null)
     {
-        <p>
-            <form @onsubmit="DeleteArticle" @formname="DeleteArticleForm" method="post">
-                <button class="btn btn-danger">Delete</button>
-                <AntiforgeryToken />
-            </form>
-        </p>
-    }
-}
+        <EditForm Model="Article" OnSubmit="HandleSubmit" FormName="ArticleEditor" class="space-y-6 my-4">
+            <div>
+                <label for="title" class="text-sm">Title</label>
+                <InputText id="title" class="w-full p-3 rounded border-1 bg-gray-800" @bind-Value="Article.Title" />
+            </div>
+            <div>
+                <label for="content" class="text-sm">Content</label>
+                <InputTextArea id="content" class="w-full p-3 rounded border-1 bg-gray-800" @bind-Value="Article.Content" />
+            </div>
+            <div>
+                <label for="datepublished" class="text-sm">Date Published</label>
+                <InputDate id="datepublished" class="w-full p-3 rounded border-1 bg-gray-800" @bind-Value="Article.DatePublished" />
+            </div>
+            <div class="form-check">
+                <InputCheckbox id="ispublished" class="form-check-input checked:bg-blue-400" @bind-Value="Article.IsPublished" />
+                <label for="ispublished">Is Published</label>
+                <p></p>
+            </div>
+            <div>
+                <button type="submit" class="w-full p-3 text-sm font-bold tracking-wide uppercase rounded bg-blue-600 text-gray-900">Submit</button>
+            </div>
+        </EditForm>
 
-<span class="text-danger">@errorMessage</span>
+        if (isEditMode)
+        {            
+            <p>
+                <h2 class="text-2xl font-extrabold text-gray-100">Danger zone</h2>
+                <form @onsubmit="DeleteArticle" @formname="DeleteArticleForm" method="post" class="my-4">
+                    <button class="p-3 text-sm font-bold tracking-wide uppercase rounded bg-red-400 text-gray-900">Delete</button>
+                    <AntiforgeryToken />
+                </form>
+            </p>
+        }
+    }
+
+    <span class="text-danger">@errorMessage</span>
+</div>
+
 
 @code {
     private bool isEditMode => ArticleId != null;

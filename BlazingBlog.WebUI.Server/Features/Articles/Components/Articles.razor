@@ -4,10 +4,12 @@
 
 <PageTitle>Articles</PageTitle>
 
-<div class="space-y-6">
+<div class="space-y-4">
     <h2 class="text-2xl font-extrabold text-gray-100">Articles</h2>
-
-    <a href="/article-editor" class="btn btn-primary"> Create New Article</a>
+    
+    <div>
+        <a href="/article-editor" class="p-3 text-sm font-bold tracking-wide uppercase rounded bg-blue-600 text-gray-900 inline-block">Create new Article</a>
+    </div>
 
     @if (articles is null)
     {
