@@ -22,6 +22,8 @@ namespace BlazingBlog.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")
                 ));
 
+            AddAuthentication(services);
+
             services.AddScoped<IArticleRepository, ArticleRepository>();
 
             return services;
@@ -29,7 +31,7 @@ namespace BlazingBlog.Infrastructure
 
 
         // To do: investigate what the out-of-the-box code would have given us here
-        public static void AddAuthentication(IServiceCollection services)
+        private static void AddAuthentication(IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
@@ -46,7 +48,10 @@ namespace BlazingBlog.Infrastructure
             }).AddIdentityCookies();
 
             services.AddIdentityCore<User>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager()
+                .AddDefaultTokenProviders();
+
         }
     }
 }
