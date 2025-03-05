@@ -20,10 +20,16 @@ else
     {
         <p><h4>@article.Title</h4></p>
         <p>@article.Content</p>
+
+
         <p>
             <small>@article.DatePublished</small>
-            <a href="/article-editor/@article.Id">Edit</a>
+        
+            <AuthorizeView>
+                <a href="/article-editor/@article.Id">Edit</a>
+            </AuthorizeView>
         </p>
+
         <hr />
     }
 
