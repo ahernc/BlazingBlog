@@ -54,6 +54,7 @@ namespace BlazingBlog.Infrastructure
             }).AddIdentityCookies();
 
             services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>() // default kind of roles
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();

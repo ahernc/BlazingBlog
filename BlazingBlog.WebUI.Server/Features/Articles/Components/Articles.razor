@@ -4,7 +4,7 @@
 
 <PageTitle>Articles</PageTitle>
 
-<AuthorizeView>
+<AuthorizeView Roles="Admin,Writer">
     <a href="/article-editor" class="btn btn-primary"> Create New Article</a>
 </AuthorizeView>
  
@@ -28,8 +28,8 @@ else
             <small>@article.DatePublished</small>
             <br />
             <small class="">By @article.UserName</small>
-        
-            <AuthorizeView>
+
+            <AuthorizeView Roles="Admin,Writer">
                 <a href="/article-editor/@article.Id">Edit</a>
             </AuthorizeView>
         </p>
