@@ -4,8 +4,10 @@
 
 <PageTitle>Articles</PageTitle>
 
-<a href="/article-editor" class="btn btn-primary"> Create New Article</a>
-
+<AuthorizeView>
+    <a href="/article-editor" class="btn btn-primary"> Create New Article</a>
+</AuthorizeView>
+ 
 @if (articles is null)
 {
     <p><em>Loading articles....</em></p>
@@ -24,6 +26,8 @@ else
 
         <p>
             <small>@article.DatePublished</small>
+            <br />
+            <small class="">By @article.UserName</small>
         
             <AuthorizeView>
                 <a href="/article-editor/@article.Id">Edit</a>

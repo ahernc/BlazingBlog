@@ -1,6 +1,11 @@
 ﻿<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" >
+            <NotAuthorized>
+                @* See comment on https://github.com/dotnet/aspnetcore/issues/52063  -- it is explained on "Secure The Article Editor"*@
+                <span>You are not authenticated. Please <a href="login">login</a> first </span>
+            </NotAuthorized>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
