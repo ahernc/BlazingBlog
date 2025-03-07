@@ -1,14 +1,18 @@
 ﻿@page "/article-editor"
 @page "/article-editor/{ArticleId:int}"
 @using BlazingBlog.Application.Articles.DeleteArticle
-
+@using BlazingBlog.Infrastructure.Authentication
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
 @inject ISender Sender
 @inject NavigationManager NavManager
+@attribute [Authorize]
+@inject UserManager<User> UserManager
 
 @if (isEditMode && Article is not null)
 {
     <PageTitle>Edit Article @Article.Title</PageTitle>
-    <h3>Edit Article @Article.Title</h3>
+    <h3>Edit Article "@Article.Title" by @Article.UserName</h3>
 }
 else
 {
@@ -26,7 +30,7 @@ else
             <InputTextArea class="form-control" @bind-Value="Article.Content" placeholder="Enter your Content" />
         </p>
         <p>
-            <InputDate class="form-control" @bind-Value="Article.DatePublished" />
+            <InputDate class="form-control" Type="InputDateType.DateTimeLocal" @bind-Value="Article.DatePublished" />
         </p>
         <div>
             <p>
@@ -58,6 +62,8 @@ else
     [Parameter]
     public int? ArticleId { get; set; }
 
+    [CascadingParameter]
+    public HttpContext context { get; set; } = default;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -104,6 +110,8 @@ else
         else
         {
             var command = Article.Adapt<CreateArticleCommand>();
+            command.UserId = UserManager.GetUserId(context.User);
+
             var result = await Sender.Send(command);
             if (result.Success)
             {
