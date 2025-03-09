@@ -31,6 +31,11 @@ namespace BlazingBlog.Infrastructure.Authentication
                 EmailConfirmed = true, // assume true for now -- confirmation is not required for now
             };
             var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                _ = await _userManager.AddToRoleAsync(user, "Reader");
+            }
+
             var response = new RegisterUserResponse
             {
                 Succeeded = result.Succeeded,

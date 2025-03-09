@@ -14,9 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Infrastructure", "BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj", "{19DE05DE-F126-4266-96CE-B2BED848D726}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{5D4C981E-6DBD-46BD-B63F-5308D265FB5F}"
-	ProjectSection(SolutionItems) = preProject
-		Notes\Identity Notes.txt = Notes\Identity Notes.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
