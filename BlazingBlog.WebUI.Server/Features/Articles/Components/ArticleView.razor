@@ -3,15 +3,22 @@
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-
+    <p class="alert-danger">
+        @errorMessage
+    </p>
 }
-<PageTitle>@article.Title</PageTitle>
-<h3>@article.Title</h3>
-
-<p>
-    @article.Content
-</p>
-
+else
+{
+    <PageTitle>@article.Title</PageTitle>
+    <h3>@article.Title</h3>
+    <p>
+        <time>@article.DatePublished.ToLongDateString()</time>
+        <span>by @article.UserName</span>
+    </p>
+    <p>
+        @article.Content
+    </p>
+}
 
 
 @code {

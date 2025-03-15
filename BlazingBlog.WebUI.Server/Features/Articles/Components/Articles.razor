@@ -20,9 +20,8 @@ else
 {
     @foreach (var article in articles)
     {
-        <p><h4>@article.Title</h4></p>
+        <p><h4><a href="articles/@article.Id">@article.Title</a></h4></p>
         <p>@article.Content</p>
-
 
         <p>
             <small>@article.DatePublished</small>
