@@ -1,8 +1,10 @@
 ﻿using BlazingBlog.Application.Authentication;
+using BlazingBlog.Application.Users;
 using BlazingBlog.Domain.Articles;
 using BlazingBlog.Domain.Users;
 using BlazingBlog.Infrastructure.Authentication;
 using BlazingBlog.Infrastructure.Repositories;
+using BlazingBlog.Infrastructure.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -26,8 +28,14 @@ namespace BlazingBlog.Infrastructure
 
             AddAuthentication(services);
 
+
+            // Needed for accessing HttpContext in middleware, anywhere serverside basically
+            // In theory not best practice but it's just easier here. 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             // Not sure if we need this
             services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
@@ -36,7 +44,6 @@ namespace BlazingBlog.Infrastructure
         }
 
 
-        // To do: investigate what the out-of-the-box code would have given us here
         private static void AddAuthentication(IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
