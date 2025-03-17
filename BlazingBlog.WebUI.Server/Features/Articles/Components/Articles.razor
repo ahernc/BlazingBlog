@@ -7,7 +7,7 @@
 <AuthorizeView Roles="Admin,Writer">
     <a href="/article-editor" class="btn btn-primary"> Create New Article</a>
 </AuthorizeView>
- 
+
 @if (articles is null)
 {
     <p><em>Loading articles....</em></p>
@@ -28,9 +28,10 @@ else
             <br />
             <small class="">By @article.UserName</small>
 
-            <AuthorizeView Roles="Admin,Writer">
-                <a href="/article-editor/@article.Id">Edit</a>
-            </AuthorizeView>
+            @if (article.CanEdit) // basic way would be to just use AuthorizeView with appropriate roles
+            {
+                <a href="/article-editor/@article.Id" class="p-lg-1">Edit</a>
+            }
         </p>
 
         <hr />
