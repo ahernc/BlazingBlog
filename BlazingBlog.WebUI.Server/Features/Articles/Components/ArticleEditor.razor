@@ -1,5 +1,6 @@
 ﻿@page "/article-editor"
 @page "/article-editor/{ArticleId:int}"
+@using BlazingBlog.Application.Articles.GetArticleByIdForEditing
 @inject ISender Sender
 @inject NavigationManager NavManager
 @attribute [Authorize(Roles = "Admin,Writer")]
@@ -8,6 +9,11 @@
 {
     <PageTitle>Edit Article @Article.Title</PageTitle>
     <h3>Edit Article "@Article.Title" by @Article.UserName</h3>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <PageTitle>Error</PageTitle>
+    <h3>Error</h3>
 }
 else
 {
@@ -65,7 +71,7 @@ else
         if (ArticleId is not null)
         {
             var result = await Sender.Send(
-                new GetArticleByIdQuery { Id = (int)ArticleId }
+                new GetArticleByIdForEditingQuery { Id = (int)ArticleId }
             );
 
             if (result.Success)

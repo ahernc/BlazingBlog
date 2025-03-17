@@ -3,41 +3,50 @@
 <div class="page">
 
     <main>
-        <div class="top-row px-4">
+        <div class="top-row px-4 d-flex justify-content-between align-items-center">
 
-            <NavLink class="nav-link" href="/">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>
-                Articles
+            <!-- Home link always on the left -->
+            <NavLink class="nav-link me-auto" href="/">
+                <span class="bi bi-house-door" aria-hidden="true"></span>
+                Home
             </NavLink>
 
+            <div class="d-flex align-items-center">
+                <NavLink class="nav-link" href="/articles">
+                    <span class="bi bi-list-nested" aria-hidden="true"></span>
+                    Articles
+                </NavLink>
 
-            <AuthorizeView>                
-                <Authorized>
-                    <NavLink class="nav-link" href="logout">
-                        Logout
-                    </NavLink>
-                </Authorized>
+                <AuthorizeView>
+                    <Authorized>
+                        <NavLink class="nav-link" href="logout">
+                            Logout
+                        </NavLink>
+                    </Authorized>
 
-                <NotAuthorized>
-                    <NavLink class="nav-link" href="register">
-                        Register
-                    </NavLink>
-                    <NavLink class="nav-link" href="login">
-                        Login
-                    </NavLink>
-                </NotAuthorized>                
-            </AuthorizeView>
-            
-            <AuthorizeView>
-                <span class="p-4">Logged in: @context.User.Identity?.Name</span>
-            </AuthorizeView>
+                    <NotAuthorized>
+                        <NavLink class="nav-link" href="register">
+                            Register
+                        </NavLink>
+                        <NavLink class="nav-link" href="login">
+                            Login
+                        </NavLink>
+                    </NotAuthorized>
+                </AuthorizeView>
+
+                <AuthorizeView>
+                    <span class="p-4">Logged in: @context.User.Identity?.Name</span>
+                </AuthorizeView>
+            </div>
 
         </div>
+
         <div class="container">
             <article class="content">
                 @Body
             </article>
         </div>
+
     </main>
 
 </div>
