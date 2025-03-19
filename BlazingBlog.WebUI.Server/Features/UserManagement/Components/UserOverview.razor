@@ -1,0 +1,47 @@
+﻿@page "/user-overview"
+@rendermode InteractiveServer
+@attribute [Authorize(Roles = "Admin")]
+@inject ISender Sender
+
+<h3>User Overview</h3>
+
+@if (users is null)
+{
+    <p>Loading users...</p>
+}
+else if (users.Count == 0)
+{
+    <p>No users!</p>
+}
+else
+{
+    <div class="grid">
+        <QuickGrid Items="@users.AsQueryable()">
+            <PropertyColumn Property="@(x => x.UserName)" Sortable="true" Title="User Name"></PropertyColumn>
+            <PropertyColumn Property="@(x => x.Email)" Sortable="true" Title="Email Address"></PropertyColumn>
+        </QuickGrid>
+    </div>
+}
+
+
+@code {
+    //watch out for the bug about the server rendering twice with prerendering...
+    public List<UserResponse>? users = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Sender.Send(new GetUsersQuery());
+        if (result.Success)
+        {
+            users = result;
+        }
+        else
+        {
+            // to do: deal with the error later...
+            users = new();
+        }
+    }
+
+
+}

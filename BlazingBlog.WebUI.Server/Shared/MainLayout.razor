@@ -12,10 +12,18 @@
             </NavLink>
 
             <div class="d-flex align-items-center">
-                <NavLink class="nav-link" href="/articles">
+                <NavLink class="nav-link" href="/">
                     <span class="bi bi-list-nested" aria-hidden="true"></span>
                     Articles
                 </NavLink>
+
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <NavLink class="nav-link" href="user-overview">
+                            Users
+                        </NavLink>
+                    </Authorized>
+                </AuthorizeView>
 
                 <AuthorizeView>
                     <Authorized>
