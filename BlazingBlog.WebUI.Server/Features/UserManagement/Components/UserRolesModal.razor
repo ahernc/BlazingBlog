@@ -1,0 +1,90 @@
+﻿@using BlazingBlog.Application.Users.GetUserRoles
+@inject ISender Sender
+
+@if (ShowModal)
+{
+    <div class="modal fade" id="manageRolesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Manage Roles for @UserName</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <QuickGrid Items="Roles.AsQueryable()">
+                        <PropertyColumn Property="@(r => r)"></PropertyColumn>
+                        <TemplateColumn>
+                            <button @onclick="() => RemoveRole(context)" class="btn btn-sm">❌</button>
+                        </TemplateColumn>
+                    </QuickGrid>
+                    <div>
+                        <input @bind="newRole" placeholder="Add New Role" />
+                        <button @onclick="AddRole" class="btn btn-sm btn-outline-primary">
+                            Add Role
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal" @onclick="CloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public bool ShowModal { get; set; } 
+
+    [Parameter]
+    public EventCallback<bool> ModalClosed { get; set; }
+
+    [Parameter]
+    public required string UserId { get; set; }
+
+    [Parameter]
+    public required string? UserName { get; set; }
+
+    private List<string> Roles { get; set; } = [];
+    private string newRole = string.Empty;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("Model is here!");
+        Console.WriteLine($"{UserName} / {UserId}");
+
+        await LoadUserRoles();
+    }
+
+    private async Task AddRole()
+    {
+        if (!string.IsNullOrWhiteSpace(newRole))
+        {
+            Roles.Add(newRole);
+            newRole = string.Empty;
+        }
+    }
+
+
+    private async Task RemoveRole(string role)
+    {
+        Roles.Remove(role);
+    }
+
+    private void CloseModal()
+    {
+        ShowModal = false;
+        ModalClosed.InvokeAsync(ShowModal);
+    }
+
+    private async Task LoadUserRoles()
+    {
+        if (ShowModal && UserId is not null)
+        {
+            Roles = (await Sender.Send(new GetUserRolesQuery { UserId = UserId })).Value ?? [];
+        }
+    }
+
+}

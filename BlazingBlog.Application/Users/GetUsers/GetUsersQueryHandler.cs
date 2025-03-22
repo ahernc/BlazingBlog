@@ -26,7 +26,7 @@ namespace BlazingBlog.Application.Users.GetUsers
             foreach (var user in users)
             {
                 var userResponse = user.Adapt<UserResponse>();
-                userResponse.Roles = string.Join(", ", await _userService.GetCurrentUserRolesAsync(user.Id));
+                userResponse.Roles = string.Join(", ", await _userService.GetUserRolesAsync(user.Id));
                 response.Add(userResponse);
             }
 

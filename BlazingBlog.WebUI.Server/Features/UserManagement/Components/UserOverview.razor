@@ -21,7 +21,7 @@ else
             <PropertyColumn Property="@(x => x.Email)" Sortable="true" Title="Email Address"></PropertyColumn>
             <PropertyColumn Property="@(x => x.Roles)" Title="Roles"></PropertyColumn>
             <TemplateColumn>
-                <button @onclick="()=>OpenModal(context.Id, context.UserName)" class="btn btn-sm btn-outline-primary">
+                <button @onclick="()=>OpenModal(context.Id, context.UserName)" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#manageRolesModal">
                     🔐 Manage Roles
                 </button>
             </TemplateColumn>
@@ -29,6 +29,18 @@ else
     </div>
 }
 
+<UserRolesModal ShowModal="@showModal" UserId="@selectedUserId" UserName="@selectedUserName" ModalClosed="CloseModal" />
+
+
+<script>
+
+    const myModal = document.getElementById('exampleModal')
+    const myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+      myInput.focus()
+    })
+</script>
 
 @code {
     //watch out for the bug about the server rendering twice with prerendering...
@@ -56,11 +68,12 @@ else
         selectedUserId = userId;
         selectedUserName = userName;
         showModal = true;
-        Console.WriteLine($"Open Modal -> {selectedUserName} // {selectedUserId}");
+        // Console.WriteLine($"Open Modal -> {selectedUserName} // {selectedUserId}");
+
     }
 
-    private void ToggleShowModal()
+    private void CloseModal()
     {
-        showModal = !showModal;
+        showModal = false;
     }
 }

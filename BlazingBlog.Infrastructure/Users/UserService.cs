@@ -73,7 +73,7 @@ namespace BlazingBlog.Infrastructure.Users
             }
         }
 
-        public async Task<List<string>> GetCurrentUserRolesAsync(string userId)
+        public async Task<List<string>> GetUserRolesAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user is null)
