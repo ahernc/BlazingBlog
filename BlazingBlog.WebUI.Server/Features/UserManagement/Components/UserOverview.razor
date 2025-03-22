@@ -38,7 +38,7 @@ else
     const myInput = document.getElementById('myInput')
 
     myModal.addEventListener('shown.bs.modal', () => {
-      myInput.focus()
+    myInput.focus()
     })
 </script>
 
@@ -51,6 +51,27 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadUsers();
+    }
+
+    private void OpenModal(string userId, string userName)
+    {
+        selectedUserId = userId;
+        selectedUserName = userName;
+        showModal = true;
+        // Console.WriteLine($"Open Modal -> {selectedUserName} // {selectedUserId}");
+
+    }
+
+    private async Task CloseModal()
+    {
+        showModal = false;
+        await LoadUsers();
+        StateHasChanged();
+    }
+
+    private async Task LoadUsers()
+    {
         var result = await Sender.Send(new GetUsersQuery());
         if (result.Success)
         {
@@ -61,19 +82,5 @@ else
             // to do: deal with the error later...
             users = new();
         }
-    }
-
-    private void OpenModal (string userId, string userName)
-    {
-        selectedUserId = userId;
-        selectedUserName = userName;
-        showModal = true;
-        // Console.WriteLine($"Open Modal -> {selectedUserName} // {selectedUserId}");
-
-    }
-
-    private void CloseModal()
-    {
-        showModal = false;
     }
 }
