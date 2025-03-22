@@ -3,7 +3,7 @@
 @attribute [Authorize(Roles = "Admin")]
 @inject ISender Sender
 
-<h3>User Overview</h3>
+<h3>Users Overview</h3>
 
 @if (users is null)
 {
@@ -19,6 +19,12 @@ else
         <QuickGrid Items="@users.AsQueryable()">
             <PropertyColumn Property="@(x => x.UserName)" Sortable="true" Title="User Name"></PropertyColumn>
             <PropertyColumn Property="@(x => x.Email)" Sortable="true" Title="Email Address"></PropertyColumn>
+            <PropertyColumn Property="@(x => x.Roles)" Title="Roles"></PropertyColumn>
+            <TemplateColumn>
+                <button @onclick="()=>OpenModal(context.Id, context.UserName)" class="btn btn-sm btn-outline-primary">
+                    🔐 Manage Roles
+                </button>
+            </TemplateColumn>
         </QuickGrid>
     </div>
 }
@@ -27,7 +33,9 @@ else
 @code {
     //watch out for the bug about the server rendering twice with prerendering...
     public List<UserResponse>? users = new();
-
+    private bool showModal = false;
+    private string selectedUserId = string.Empty;
+    private string selectedUserName = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,5 +51,16 @@ else
         }
     }
 
+    private void OpenModal (string userId, string userName)
+    {
+        selectedUserId = userId;
+        selectedUserName = userName;
+        showModal = true;
+        Console.WriteLine($"Open Modal -> {selectedUserName} // {selectedUserId}");
+    }
 
+    private void ToggleShowModal()
+    {
+        showModal = !showModal;
+    }
 }

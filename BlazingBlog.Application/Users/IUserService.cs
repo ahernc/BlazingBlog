@@ -6,5 +6,6 @@
         Task<bool> IsCurrentUserInRoleAsync(string role);
         Task<bool> CurrentUserCanCreateArticleAsync();
         Task<bool> CurrentUserCanEditArticleAsync(int articleId);
+        Task<List<string>> GetCurrentUserRolesAsync(string userId);
     }
 }

@@ -21,7 +21,15 @@ namespace BlazingBlog.Application.Users.GetUsers
                 return Result.Fail<List<UserResponse>>("You are not allowed to see all users");
             }
             var users = await _userRepository.GetAllUsersAsync();
-            var response = users.Adapt<List<UserResponse>>();
+
+            var response = new List<UserResponse>();
+            foreach (var user in users)
+            {
+                var userResponse = user.Adapt<UserResponse>();
+                userResponse.Roles = string.Join(", ", await _userService.GetCurrentUserRolesAsync(user.Id));
+                response.Add(userResponse);
+            }
+
             return response;
         }
     }
