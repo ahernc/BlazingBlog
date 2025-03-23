@@ -20,9 +20,15 @@ else
 {
     @foreach (var article in articles)
     {
-        <p><h4><a href="articles/@article.Id">@article.Title</a></h4></p>
-        <p>@article.Content</p>
-
+        <p>
+            <h4><a href="articles/@article.Id">@article.Title</a></h4>
+        </p>
+        <p>
+            @if (!string.IsNullOrEmpty(article.Content))
+            {
+                @((MarkupString)article.Content.Replace("\r\n", "<br />").Replace("\n", "<br />"))
+            }
+        </p>
         <p>
             <small>@article.DatePublished</small>
             <br />
@@ -33,12 +39,9 @@ else
                 <a href="/article-editor/@article.Id" class="p-lg-1">Edit</a>
             }
         </p>
-
         <hr />
     }
-
 }
-
 
 @code {
     private List<ArticleResponse>? articles;

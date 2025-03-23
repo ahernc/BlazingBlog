@@ -20,7 +20,12 @@ else
         }
     </p>
     <p>
-        @article.Content
+        @* @article.Content *@
+        @if (!string.IsNullOrEmpty(article.Content))
+        {
+            @((MarkupString)article.Content.Replace("\r\n", "<br />").Replace("\n", "<br />")
+                )
+        }
     </p>
 }
 
