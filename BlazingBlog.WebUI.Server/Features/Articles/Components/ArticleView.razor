@@ -1,5 +1,6 @@
 ﻿@page "/articles/{articleId:int}"
-@inject ISender Sender
+@inject ISender Sender 
+@* Not specifying a render mode. Rendered directly on the server... *@
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {

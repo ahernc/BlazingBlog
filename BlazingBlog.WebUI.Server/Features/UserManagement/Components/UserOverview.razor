@@ -1,5 +1,9 @@
 ﻿@page "/user-overview"
-@rendermode InteractiveServer
+@* Default starting point: @rendermode InteractiveServer *@
+@* https://learn.dotnetwebacademy.com/courses/net-8-blazor-clean-architecture-masterclass/lectures/57032789 
+    Alternative way: Don't use prerendering... this allows us to see the frame first, then display it.
+*@
+@rendermode @(new InteractiveServerRenderMode(false)) 
 @attribute [Authorize(Roles = "Admin")]
 @inject ISender Sender
 
@@ -44,7 +48,7 @@ else
 
 @code {
     //watch out for the bug about the server rendering twice with prerendering...
-    public List<UserResponse>? users = new();
+    public List<UserResponse>? users;
     private bool showModal = false;
     private string selectedUserId = string.Empty;
     private string selectedUserName = string.Empty;
