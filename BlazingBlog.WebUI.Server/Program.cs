@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents() // static server side stuff...
-    .AddInteractiveServerComponents(); // server side stuf...
+    .AddInteractiveServerComponents() // server side stuf...
+    .AddInteractiveWebAssemblyComponents(); // WebAssembly added for article management
+
 
 // All depenencies in the ApplicationLayer are loaded here:
 builder.Services.AddApplication();
@@ -28,6 +30,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode(); // Configure to allow server render mode... 
+    .AddInteractiveServerRenderMode()  // Configure to allow server render mode... 
+    .AddInteractiveWebAssemblyRenderMode();   // WebAssembly added later
 
 app.Run();
