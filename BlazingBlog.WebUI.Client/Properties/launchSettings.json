@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "BlazingBlog.WebUI.Client": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53255;http://localhost:53256"
+    }
+  }
+}

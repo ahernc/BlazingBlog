@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
-namespace BlazingBlog.WebUI.Server.Components
+namespace BlazingBlog.WebUI.Server.Features.Components
 {
     internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
     {

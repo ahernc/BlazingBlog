@@ -10,6 +10,8 @@
 
         Task<Article?> UpdateArticleAsync(Article article);
 
+        Task<List<Article>> GetArticlesByUserIdAsync(string userId);
+
         Task<bool> DeleteArticleAsync(int id);
     }
 }

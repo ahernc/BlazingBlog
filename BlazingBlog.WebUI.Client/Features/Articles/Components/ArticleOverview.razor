@@ -1,0 +1,62 @@
+﻿@page "/article-overview"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@* @rendermode InteractiveWebAssembly // any rendermode can still be applied, depending on what we want to do. *@
+ @rendermode @(new InteractiveWebAssemblyRenderMode(false)) // confusing. See section "Finally the Client"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<PageTitle>Article Overview</PageTitle>
+<h3>Article Overview</h3>
+
+@if (articles is null)
+{
+    <span>Loading articles</span>
+}
+else if (articles.Count == 0)
+{
+    <span>You haven't written any article yet</span>
+}
+else
+{
+    <QuickGrid items="@articles.AsQueryable()">        
+        <PropertyColumn Property="@(a => a.Title)" Title="Title" Sortable="true"></PropertyColumn>
+        <PropertyColumn Property="@(a => a.DatePublished)" Title="Date" Sortable="true"></PropertyColumn>
+        @* <PropertyColumn Property="@(a => a.IsPublished)" Title="Published" Sortable="true"></PropertyColumn> *@
+        <TemplateColumn Title="Published" Sortable="true">
+            @if(context.IsPublished) {
+                <span>✔️</span>
+            }
+            else
+            {
+                <span>✖️</span>
+            }
+        </TemplateColumn>
+        <TemplateColumn>
+            <button onclick="() => EditArticle(context.Id)"
+            class="btn">
+                ✏️ Edit
+            </button>
+        </TemplateColumn>
+    </QuickGrid>
+}
+
+
+@code {
+    private List<ArticleResponse>? articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await Http.GetFromJsonAsync<List<ArticleResponse>>("/api/Articles");
+        if (articles is null)
+        {
+            articles = [];
+        }
+
+    }
+
+    private void EditArticle(int id)
+    {
+        NavigationManager.NavigateTo($"/article-editor/{id}");
+    }
+
+}
