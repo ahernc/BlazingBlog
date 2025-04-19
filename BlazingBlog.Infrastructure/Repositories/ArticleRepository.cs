@@ -34,7 +34,8 @@ namespace BlazingBlog.Infrastructure.Repositories
 
         public async Task<List<Article>> GetAllArticlesAsync()
         {
-            return await _context.Articles.ToListAsync();
+            // To do: rename and allow filter by Published only... that's the whole point of the published flag
+            return await _context.Articles.Where(x => x.IsPublished).ToListAsync();
         }
 
         public async Task<Article?> GetArticleByIdAsync(int id)

@@ -20,26 +20,29 @@ else
 {
     <QuickGrid items="@articles.AsQueryable()">
         <PropertyColumn Property="@(a => a.Title)" Title="Title" Sortable="true"></PropertyColumn>
-        <PropertyColumn Property="@(a => a.DatePublished)" Title="Date" Sortable="true"></PropertyColumn>
-        @* <PropertyColumn Property="@(a => a.IsPublished)" Title="Published" Sortable="true"></PropertyColumn> *@
-        <TemplateColumn Title="Published" Sortable="true">
-            @if (context.IsPublished)
-            {
-                <span>✔️</span>
-            }
-            else
-            {
-                <span>❌</span>
-            }
-        </TemplateColumn>
         <TemplateColumn>
             <button @onclick="() => EditArticle(context.Id)"
                     class="btn">
                 ✏️ Edit
             </button>
         </TemplateColumn>
+        <PropertyColumn Property="@(a => a.DatePublished)" Title="Date" Sortable="true"></PropertyColumn>
+        @* <PropertyColumn Property="@(a => a.IsPublished)" Title="Published" Sortable="true"></PropertyColumn> *@
+        <TemplateColumn Title="Published" Sortable="true">
+            @if (context.IsPublished)
+            {               
+                <span>Yes</span>
+                @* <span>✔️</span> *@
+            }
+            else
+            {
+                <span>No</span>
+                @* <span>❌</span> *@
+            }
+            
+        </TemplateColumn>
         <TemplateColumn>
-            <button @onclick="() => TogglePublishArticle(context.Id)" 
+            <button @onclick="() => TogglePublishArticle(context.Id)"
                     class=@((context.IsPublished) ? "btn btn-danger" : "btn btn-success")>
 
                 @(context.IsPublished ? "Unpublish" : "Publish")
