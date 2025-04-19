@@ -18,23 +18,31 @@ else if (articles.Count == 0)
 }
 else
 {
-    <QuickGrid items="@articles.AsQueryable()">        
+    <QuickGrid items="@articles.AsQueryable()">
         <PropertyColumn Property="@(a => a.Title)" Title="Title" Sortable="true"></PropertyColumn>
         <PropertyColumn Property="@(a => a.DatePublished)" Title="Date" Sortable="true"></PropertyColumn>
         @* <PropertyColumn Property="@(a => a.IsPublished)" Title="Published" Sortable="true"></PropertyColumn> *@
         <TemplateColumn Title="Published" Sortable="true">
-            @if(context.IsPublished) {
+            @if (context.IsPublished)
+            {
                 <span>✔️</span>
             }
             else
             {
-                <span>✖️</span>
+                <span>❌</span>
             }
         </TemplateColumn>
         <TemplateColumn>
-            <button onclick="() => EditArticle(context.Id)"
-            class="btn">
+            <button @onclick="() => EditArticle(context.Id)"
+                    class="btn">
                 ✏️ Edit
+            </button>
+        </TemplateColumn>
+        <TemplateColumn>
+            <button @onclick="() => TogglePublishArticle(context.Id)" 
+                    class=@((context.IsPublished) ? "btn btn-danger" : "btn btn-success")>
+
+                @(context.IsPublished ? "Unpublish" : "Publish")
             </button>
         </TemplateColumn>
     </QuickGrid>
@@ -59,4 +67,18 @@ else
         NavigationManager.NavigateTo($"/article-editor/{id}");
     }
 
+    private async Task TogglePublishArticle(int id)
+    {
+        var result = await Http.PatchAsync($"api/Articles/{id}", null);
+        if (result.IsSuccessStatusCode && articles is not null)
+        {
+            var updatedArticle = await result.Content.ReadFromJsonAsync<ArticleResponse>();
+            var index = articles.FindIndex(a => a.Id == id);
+            if (index != -1)
+            {
+                articles[index] = updatedArticle;
+                StateHasChanged(); // not handled in the lifecycle methods so need to trigger the update
+            }
+        }
+    }
 }
